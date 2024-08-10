@@ -4,4 +4,6 @@ if [ "${1:0:1}" = '-' ]; then
     set -- mattermost "$@"
 fi
 
-exec "$@"
+chown -R mattermost:mattermost /mattermost
+
+exec gosu mattermost "$@"
