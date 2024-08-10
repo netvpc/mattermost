@@ -1,0 +1,32 @@
+services:
+  postgres:
+    container_name: postgres_mattermost
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=mattermost
+      - POSTGRES_PASSWORD=mattermost
+      - POSTGRES_DB=mattermost
+
+  mattermost:
+    depends_on:
+      - postgres
+    container_name: mattermost
+    image: ghcr.io/netvpc/mattermost:9.11.0
+    restart: unless-stopped
+    ports:
+      - 8065:8065
+    volumes:
+      - ./mattermost/config:/mattermost/config
+      - ./mattermost/data:/mattermost/data
+      - ./mattermost/logs:/mattermost/logs
+      - ./mattermost/plugins:/mattermost/plugins
+      - ./mattermost/client/plugins:/mattermost/client/plugins
+      - ./mattermost/bleve-indexes:/mattermost/bleve-indexes
+    environment:
+      - MM_SQLSETTINGS_DRIVERNAME=postgres
+      - MM_SQLSETTINGS_DATASOURCE=postgres://mattermost:mattermost@postgres:5432/mattermost?sslmode=disable&connect_timeout=10
+      - MM_BLEVESETTINGS_INDEXDIR=/mattermost/bleve-indexes
+      - MM_SERVICESETTINGS_SITEURL=https://chat.netvpc.com

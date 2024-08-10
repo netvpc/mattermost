@@ -81,7 +81,9 @@ jobs:
 
       - name: Set Clean Version
         id: set-clean-version
-        run: echo "VERSION=${{ env.RELEASE_VERSION#v }}" >> $GITHUB_ENV
+        run: |
+          CLEAN_VERSION=$(echo "${{ env.RELEASE_VERSION }}" | sed 's/^v//')
+          echo "VERSION=${CLEAN_VERSION}" >> $GITHUB_ENV
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action

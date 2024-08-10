@@ -25,11 +25,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           LOCAL_VER=$(git -c 'versionsort.suffix=-' \
-              ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/netvpc/nodebb.git \
+              ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/netvpc/mattermost.git \
               | tail --lines=1 \
               | cut --delimiter='/' --fields=3)
           RELEASE_VER=$(git -c 'versionsort.suffix=-' \
-              ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/nodebb/nodebb.git \
+              ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/mattermost/mattermost.git \
               | tail --lines=1 \
               | cut --delimiter='/' --fields=3)
           if [[ $RELEASE_VER != $LOCAL_VER ]]; then

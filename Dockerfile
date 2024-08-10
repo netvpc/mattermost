@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ARG VERSION=9.10.1
+ARG VERSION
 
 ENV TZ=Asia/Seoul \
     PATH="/mattermost/bin:${PATH}" \
@@ -17,10 +17,10 @@ RUN apt-get update && \
 RUN TARGETARCH="$(dpkg --print-architecture)" && \
     case "${TARGETARCH}" in \
       "amd64" | "arm64") \
-        mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins && \
+        mkdir -p /mattermost/data /mattermost/logs /mattermost/config /mattermost/plugins /mattermost/client/plugins  && \
         addgroup --gid ${PGID} mattermost && \
         adduser --disabled-password --uid ${PUID} --gid ${PGID} --gecos "" --home /mattermost mattermost && \
-        curl -sSL "${MM_PACKAGE_BASE}-${TARGETARCH}.tar.gz?src=docker" | tar -xz -C /mattermost --strip-components=1 && \
+        curl -sSL "${MM_PACKAGE_BASE}-${TARGETARCH}.tar.gz" | tar -xz -C /mattermost --strip-components=1 && \
         chown -R mattermost:mattermost /mattermost; \
         ;; \
       *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
