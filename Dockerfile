@@ -35,7 +35,7 @@ COPY start.sh /usr/local/bin/
 
 WORKDIR /mattermost
 
-EXPOSE 8065 8067 8074 8075
+EXPOSE 8065/tcp 8067/tcp 8074/tcp 8074/udp
 
 VOLUME [ "/mattermost/data", "/mattermost/logs", "/mattermost/config", "/mattermost/plugins", "/mattermost/client/plugins" ]
 
