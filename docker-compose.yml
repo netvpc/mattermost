@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: postgres_mattermost
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     restart: unless-stopped
     volumes:
       - ./postgresql/data:/var/lib/postgresql/data
