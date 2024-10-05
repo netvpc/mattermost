@@ -14,7 +14,7 @@ services:
     depends_on:
       - postgres
     container_name: mattermost
-    image: ghcr.io/netvpc/mattermost:10.0.0
+    image: ghcr.io/netvpc/mattermost:10.1.1
     restart: unless-stopped
     ports:
       - 8065:8065
